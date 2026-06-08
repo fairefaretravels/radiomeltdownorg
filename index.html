@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STV Radiomeltdown — Now Playing</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{background:#000;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'DM Sans',sans-serif;padding:1.5rem;background-image:radial-gradient(ellipse at center,#1a0a00 0%,#000 70%);}
+.player-wrap{width:100%;max-width:420px;}
+.vu-wrap{display:flex;align-items:flex-end;justify-content:center;gap:3px;height:40px;margin-bottom:1.5rem;opacity:0;transition:opacity .5s;}
+.vu-wrap.active{opacity:1;}
+.vu-bar{width:4px;border-radius:2px;background:rgba(200,169,110,0.4);height:4px;transition:height .12s ease;}
+.vu-bar.red{background:rgba(232,0,45,0.5);}
+.player-card{background:#111;border:1px solid rgba(200,169,110,0.25);border-radius:8px;overflow:hidden;box-shadow:0 0 60px rgba(200,169,110,0.06);}
+.player-top{background:#0a0806;border-bottom:1px solid rgba(200,169,110,0.15);padding:.6rem 1.25rem;display:flex;align-items:center;justify-content:space-between;}
+.shuffle-pill{display:flex;align-items:center;gap:.4rem;font-family:'Bebas Neue',sans-serif;font-size:.75rem;letter-spacing:.2em;color:#c8a96e;}
+.shuffle-dot{width:7px;height:7px;border-radius:50%;background:#c8a96e;box-shadow:0 0 8px rgba(200,169,110,.6);animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+.top-right{font-family:'Bebas Neue',sans-serif;font-size:.75rem;letter-spacing:.15em;color:rgba(200,169,110,.35);}
+.station-id{padding:1.5rem 1.5rem 1rem;text-align:center;border-bottom:1px solid rgba(200,169,110,.1);}
+.station-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,8vw,3rem);letter-spacing:.08em;color:#fff;line-height:1;}
+.station-name span{color:#c8a96e;}
+.station-sub{font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-top:.35rem;}
+.track-info{padding:1.25rem 1.5rem;border-bottom:1px solid rgba(200,169,110,.1);min-height:80px;}
+.track-number{font-size:8px;letter-spacing:.3em;text-transform:uppercase;color:rgba(200,169,110,.4);margin-bottom:.35rem;}
+.track-title{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.06em;color:#fff;line-height:1.1;}
+.track-artist{font-size:11px;color:rgba(255,255,255,.35);margin-top:.25rem;}
+.progress-wrap{padding:.75rem 1.5rem;border-bottom:1px solid rgba(200,169,110,.1);}
+.progress-track{width:100%;height:3px;background:rgba(255,255,255,.08);border-radius:2px;cursor:pointer;position:relative;}
+.progress-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,#8b6914,#c8a96e);width:0%;position:relative;}
+.progress-fill::after{content:'';position:absolute;right:-5px;top:50%;transform:translateY(-50%);width:10px;height:10px;border-radius:50%;background:#c8a96e;box-shadow:0 0 6px #c8a96e;}
+.time-row{display:flex;justify-content:space-between;margin-top:.4rem;font-size:9px;letter-spacing:.1em;color:rgba(255,255,255,.25);font-family:'Bebas Neue',sans-serif;}
+.controls{padding:1.25rem 1.5rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(200,169,110,.1);}
+.ctrl-btn{background:transparent;border:1px solid rgba(200,169,110,.2);color:rgba(200,169,110,.6);width:40px;height:40px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.ctrl-btn:hover{border-color:#c8a96e;color:#c8a96e;}
+.ctrl-btn svg{width:16px;height:16px;fill:currentColor;}
+.play-btn{width:56px;height:56px;border-radius:50%;background:#e8002d;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s,transform .1s;box-shadow:0 0 20px rgba(232,0,45,.25);}
+.play-btn:hover{background:#c20025;transform:scale(1.05);}
+.play-btn svg{width:20px;height:20px;fill:#fff;margin-left:2px;}
+.play-btn.playing svg{margin-left:0;}
+.vol-row{padding:.75rem 1.5rem 1rem;display:flex;align-items:center;gap:.75rem;}
+.vol-icon{color:rgba(255,255,255,.25);font-size:12px;flex-shrink:0;}
+.vol-slider{-webkit-appearance:none;appearance:none;flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.1);outline:none;cursor:pointer;}
+.vol-slider::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;border-radius:50%;background:#c8a96e;cursor:pointer;}
+.vol-pct{font-size:9px;color:rgba(255,255,255,.25);min-width:28px;text-align:right;font-family:'Bebas Neue',sans-serif;}
+.playlist{border-top:1px solid rgba(200,169,110,.1);}
+.playlist-label{padding:.5rem 1.5rem;font-size:8px;letter-spacing:.3em;text-transform:uppercase;color:rgba(200,169,110,.35);border-bottom:1px solid rgba(255,255,255,.04);}
+.playlist-item{padding:.6rem 1.5rem;display:flex;align-items:center;gap:.75rem;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.03);transition:background .15s;}
+.playlist-item:hover{background:rgba(200,169,110,.04);}
+.playlist-item.active{background:rgba(200,169,110,.07);}
+.pi-num{font-family:'Bebas Neue',sans-serif;font-size:.75rem;color:rgba(255,255,255,.2);min-width:16px;}
+.playlist-item.active .pi-num{color:#e8002d;}
+.pi-title{font-size:12px;color:rgba(255,255,255,.6);flex:1;}
+.playlist-item.active .pi-title{color:#fff;}
+.pi-dur{font-size:10px;color:rgba(255,255,255,.2);font-family:'Bebas Neue',sans-serif;}
+.pi-bars{width:16px;height:12px;display:none;align-items:flex-end;gap:2px;}
+.playlist-item.active.playing .pi-bars{display:flex;}
+.playlist-item.active.playing .pi-num{display:none;}
+.pi-bars span{width:3px;border-radius:1px;background:#e8002d;height:4px;animation:mini 0.6s ease-in-out infinite;}
+.pi-bars span:nth-child(2){animation-delay:.2s;}
+.pi-bars span:nth-child(3){animation-delay:.4s;}
+@keyframes mini{0%,100%{height:2px;}50%{height:10px;}}
+.player-links{padding:.6rem 1.5rem;display:flex;gap:.4rem;flex-wrap:wrap;}
+.link-pill{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);text-decoration:none;border:1px solid rgba(255,255,255,.07);padding:.2rem .55rem;border-radius:3px;transition:all .2s;}
+.link-pill:hover{color:#fff;border-color:rgba(200,169,110,.3);}
+.loading{padding:2rem;text-align:center;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.2);}
+</style>
+</head>
+<body>
+
+<div class="player-wrap">
+  <div class="vu-wrap" id="vu"></div>
+  <div class="player-card">
+    <div class="player-top">
+      <div class="shuffle-pill"><span class="shuffle-dot"></span>SHUFFLE MODE</div>
+      <div class="top-right">G4E MOVEMENT STUDIO</div>
+    </div>
+    <div class="station-id">
+      <div class="station-name">STV <span>RADIO</span>MELTDOWN</div>
+      <div class="station-sub">Lithonia, GA &nbsp;·&nbsp; Culture. Street. Sound.</div>
+    </div>
+    <div class="track-info">
+      <div class="track-number" id="track-number">Loading...</div>
+      <div class="track-title" id="track-title">—</div>
+      <div class="track-artist">STV Radiomeltdown</div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-track" id="prog-track" onclick="scrub(event)">
+        <div class="progress-fill" id="prog-fill"></div>
+      </div>
+      <div class="time-row">
+        <span id="time-cur">0:00</span>
+        <span id="time-dur">0:00</span>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="ctrl-btn" onclick="prevTrack()">
+        <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
+      </button>
+      <button class="play-btn" id="play-btn" onclick="togglePlay()">
+        <svg id="play-icon" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+      </button>
+      <button class="ctrl-btn" onclick="nextTrack()">
+        <svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zm2-8.14L11.03 12 8 14.14V9.86zM16 6h2v12h-2z"/></svg>
+      </button>
+    </div>
+    <div class="vol-row">
+      <span class="vol-icon">&#128266;</span>
+      <input type="range" class="vol-slider" id="vol-slider" min="0" max="100" value="80" oninput="setVol(this.value)">
+      <span class="vol-pct" id="vol-pct">80%</span>
+    </div>
+    <div class="playlist">
+      <div class="playlist-label">Playlist — Shuffled</div>
+      <div id="playlist-items"><div class="loading">Loading playlist...</div></div>
+    </div>
+    <div class="player-links">
+      <a href="https://kick.com/STVNETWORK" target="_blank" rel="noopener" class="link-pill">Kick</a>
+      <a href="https://www.youtube.com/@STVRADIOMELTDOWN" target="_blank" rel="noopener" class="link-pill">YouTube</a>
+      <a href="https://radiomeltdown.com" target="_blank" rel="noopener" class="link-pill">radiomeltdown.com</a>
+      <a href="https://www.tiktok.com/@sanecatv" target="_blank" rel="noopener" class="link-pill">@SanecaTV</a>
+    </div>
+  </div>
+</div>
+
+<audio id="audio"></audio>
+
+<script>
+const audio = document.getElementById('audio');
+const playBtn = document.getElementById('play-btn');
+const playIcon = document.getElementById('play-icon');
+const vu = document.getElementById('vu');
+const PLAY = '<polygon points="5,3 19,12 5,21"/>';
+const PAUSE = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
+
+let tracks = [];
+let shuffleOrder = [];
+let currentPos = 0;
+let playing = false;
+let vuInterval = null;
+
+// Build VU bars
+for(let i=0;i<22;i++){
+  const b=document.createElement('div');
+  b.className='vu-bar'+(i>=18?' red':'');
+  b.style.animationDelay=(Math.random()*.8)+'s';
+  vu.appendChild(b);
+}
+
+// Load playlist.json — just edit that file to add songs, never touch this code
+fetch('playlist.json')
+  .then(r=>r.json())
+  .then(data=>{
+    tracks = data;
+    shuffleOrder = shuffle(tracks.map((_,i)=>i));
+    buildPlaylistUI();
+    loadTrack(shuffleOrder[0]);
+  })
+  .catch(()=>{
+    document.getElementById('playlist-items').innerHTML='<div class="loading">Add a playlist.json file to your repo root</div>';
+  });
+
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+function buildPlaylistUI(){
+  const container = document.getElementById('playlist-items');
+  container.innerHTML = shuffleOrder.map((trackIdx,pos)=>{
+    const t = tracks[trackIdx];
+    return `
+      <div class="playlist-item" id="pi-${pos}" onclick="jumpTo(${pos})">
+        <div class="pi-num">${pos+1}</div>
+        <div class="pi-bars"><span></span><span></span><span></span></div>
+        <div class="pi-title">${t.title}</div>
+        <div class="pi-dur" id="dur-${pos}">—</div>
+      </div>`;
+  }).join('');
+
+  // Pre-load durations
+  shuffleOrder.forEach((trackIdx,pos)=>{
+    const tmp=new Audio(tracks[trackIdx].file);
+    tmp.addEventListener('loadedmetadata',()=>{
+      const el=document.getElementById('dur-'+pos);
+      if(el) el.textContent=fmt(tmp.duration);
+    });
+  });
+}
+
+function loadTrack(trackIdx){
+  const pos = shuffleOrder.indexOf(trackIdx);
+  currentPos = pos;
+  const t = tracks[trackIdx];
+  audio.src = t.file;
+  audio.load();
+  document.getElementById('track-title').textContent = t.title;
+  document.getElementById('track-number').textContent = 'Track '+(pos+1)+' of '+tracks.length;
+  document.getElementById('prog-fill').style.width='0%';
+  document.getElementById('time-cur').textContent='0:00';
+  document.getElementById('time-dur').textContent='0:00';
+  updateUI();
+}
+
+function jumpTo(pos){
+  playing=false;
+  stopVU();
+  loadTrack(shuffleOrder[pos]);
+  audio.play().then(()=>{
+    playing=true;
+    playIcon.innerHTML=PAUSE;
+    playBtn.classList.add('playing');
+    startVU();
+    updateUI();
+  });
+}
+
+function togglePlay(){
+  if(!playing){
+    audio.play().then(()=>{
+      playing=true;
+      playIcon.innerHTML=PAUSE;
+      playBtn.classList.add('playing');
+      startVU();
+      updateUI();
+    });
+  } else {
+    audio.pause();
+    playing=false;
+    playIcon.innerHTML=PLAY;
+    playBtn.classList.remove('playing');
+    stopVU();
+    updateUI();
+  }
+}
+
+function nextTrack(){
+  const next=(currentPos+1)%shuffleOrder.length;
+  jumpTo(next);
+}
+
+function prevTrack(){
+  if(audio.currentTime>3){audio.currentTime=0;return;}
+  const prev=(currentPos-1+shuffleOrder.length)%shuffleOrder.length;
+  jumpTo(prev);
+}
+
+function updateUI(){
+  document.querySelectorAll('.playlist-item').forEach((el,i)=>{
+    el.classList.toggle('active',i===currentPos);
+    el.classList.toggle('playing',i===currentPos&&playing);
+  });
+}
+
+audio.addEventListener('timeupdate',()=>{
+  if(!audio.duration)return;
+  document.getElementById('prog-fill').style.width=(audio.currentTime/audio.duration*100)+'%';
+  document.getElementById('time-cur').textContent=fmt(audio.currentTime);
+});
+audio.addEventListener('loadedmetadata',()=>{
+  document.getElementById('time-dur').textContent=fmt(audio.duration);
+  const durEl=document.getElementById('dur-'+currentPos);
+  if(durEl)durEl.textContent=fmt(audio.duration);
+});
+audio.addEventListener('ended',()=>nextTrack());
+
+function scrub(e){
+  const r=document.getElementById('prog-track').getBoundingClientRect();
+  if(audio.duration)audio.currentTime=((e.clientX-r.left)/r.width)*audio.duration;
+}
+function setVol(v){audio.volume=v/100;document.getElementById('vol-pct').textContent=Math.round(v)+'%';}
+function fmt(s){if(!s||isNaN(s))return'0:00';return Math.floor(s/60)+':'+Math.floor(s%60).toString().padStart(2,'0');}
+function startVU(){
+  vu.classList.add('active');
+  vuInterval=setInterval(()=>vu.querySelectorAll('.vu-bar').forEach(b=>b.style.height=(4+Math.random()*32)+'px'),120);
+}
+function stopVU(){
+  vu.classList.remove('active');
+  clearInterval(vuInterval);
+  vu.querySelectorAll('.vu-bar').forEach(b=>b.style.height='4px');
+}
+audio.volume=0.8;
+</script>
+</body>
+</html>

@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radio Meltdown — Your Voice. Your Vision. Your Network.</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --neon-cyan: #00f5ff;
+    --neon-purple: #bf00ff;
+    --neon-orange: #ff6b00;
+    --neon-green: #00ff88;
+    --neon-pink: #ff0080;
+    --bg-dark: #050810;
+    --bg-card: rgba(10,15,35,0.85);
+    --text-primary: #f0f4ff;
+    --text-muted: #7a8aaa;
+    --gold: #ffc94a;
+    --gold2: #e0a020;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: 'Rajdhani', sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* ─── Animated BG ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 10%, rgba(0,245,255,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(191,0,255,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 50% 50%, rgba(255,107,0,0.04) 0%, transparent 70%);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* ─── Scanlines ─── */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.15) 2px,
+      rgba(0,0,0,0.15) 4px
+    );
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  /* ─── Header ─── */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(5,8,16,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0,245,255,0.15);
+    padding: 0 2rem;
+  }
+
+  .header-inner {
+    max-width: 1600px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    height: 72px;
+  }
+
+  .logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .logo-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 0 20px rgba(0,245,255,0.4);
+    animation: pulse-logo 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse-logo {
+    0%, 100% { box-shadow: 0 0 20px rgba(0,245,255,0.4); }
+    50% { box-shadow: 0 0 40px rgba(0,245,255,0.7), 0 0 70px rgba(191,0,255,0.3); }
+  }
+
+  .logo-text {
+    line-height: 1;
+  }
+
+  .logo-text .top {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    color: var(--neon-cyan);
+    text-transform: uppercase;
+  }
+
+  .logo-text .main {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.1em;
+    background: linear-gradient(90deg, #fff 0%, var(--neon-cyan) 50%, var(--neon-purple) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ─── Navigation Tabs ─── */
+  nav.main-nav {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    flex: 1;
+  }
+
+  nav.main-nav::-webkit-scrollbar { display: none; }
+
+  .nav-tab {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 8px 14px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: var(--text-muted);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+
+  .nav-tab .tab-icon { font-size: 1.1rem; transition: transform 0.2s; }
+
+  .nav-tab:hover { color: var(--text-primary); }
+  .nav-tab:hover .tab-icon { transform: scale(1.2); }
+
+  .nav-tab.active { color: var(--neon-cyan); }
+
+  .nav-tab::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) scaleX(0);
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+    border-radius: 2px 2px 0 0;
+    transition: transform 0.25s;
+  }
+
+  .nav-tab.active::after,
+  .nav-tab:hover::after { transform: translateX(-50%) scaleX(1); }
+
+  /* ─── Hero ─── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    min-height: 320px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      linear-gradient(135deg, rgba(0,245,255,0.05) 0%, transparent 50%),
+      linear-gradient(225deg, rgba(191,0,255,0.05) 0%, transparent 50%);
+  }
+
+  .hero-bg-img {
+    position: absolute;
+    inset: 0;
+    background-image: url('change_website_to_radiomeltdown_org_2K_202606080657.jpeg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.15;
+    filter: blur(2px) saturate(1.5);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1600px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 3rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .hero-left { flex: 1; }
+
+  .hero-eyebrow {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    color: var(--neon-cyan);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 30px;
+    height: 1px;
+    background: var(--neon-cyan);
+    box-shadow: 0 0 8px var(--neon-cyan);
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    line-height: 0.95;
+    letter-spacing: 0.03em;
+    margin-bottom: 1.2rem;
+  }
+
+  .hero-title span.hl-cyan { 
+    background: linear-gradient(90deg, var(--neon-cyan), #fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-title span.hl-purple {
+    background: linear-gradient(90deg, var(--neon-purple), var(--neon-pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .hero-tag {
+    padding: 4px 14px;
+    border: 1px solid rgba(0,245,255,0.25);
+    border-radius: 20px;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    background: rgba(0,245,255,0.05);
+    transition: all 0.2s;
+    cursor: default;
+  }
+
+  .hero-tag:hover {
+    border-color: var(--neon-cyan);
+    color: var(--neon-cyan);
+    background: rgba(0,245,255,0.1);
+  }
+
+  .hero-right {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    background: rgba(255,0,0,0.15);
+    border: 1px solid rgba(255,60,60,0.5);
+    border-radius: 6px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: #ff4444;
+    text-transform: uppercase;
+  }
+
+  .live-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ff4444;
+    animation: blink 1.2s ease-in-out infinite;
+    box-shadow: 0 0 8px #ff4444;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+    border: none;
+    border-radius: 6px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: #000;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    box-shadow: 0 4px 20px rgba(0,245,255,0.3);
+  }
+
+  .cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,245,255,0.5);
+  }
+
+  /* ─── Divider ─── */
+  .section-divider {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 2rem 2rem 1rem;
+  }
+
+  .section-divider h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+    color: var(--text-primary);
+  }
+
+  .section-divider h2 span {
+    color: var(--neon-cyan);
+  }
+
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(0,245,255,0.4), transparent);
+  }
+
+  /* ─── Channel Grid ─── */
+  .channel-grid {
+    position: relative;
+    z-index: 1;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 2rem 3rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  /* ─── Channel Card ─── */
+  .channel-card {
+    position: relative;
+    background: var(--bg-card);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    overflow: hidden;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+    cursor: pointer;
+    group: '';
+  }
+
+  .channel-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    border-color: var(--card-accent, rgba(0,245,255,0.4));
+    box-shadow: 0 12px 40px var(--card-glow, rgba(0,245,255,0.15));
+  }
+
+  .card-accent-bar {
+    height: 3px;
+    background: var(--card-gradient, linear-gradient(90deg, var(--neon-cyan), var(--neon-purple)));
+    flex-shrink: 0;
+  }
+
+  .card-body {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background: var(--card-icon-bg, rgba(0,245,255,0.1));
+    border: 1px solid var(--card-accent, rgba(0,245,255,0.2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+
+  .channel-card:hover .card-icon { transform: scale(1.1) rotate(-5deg); }
+
+  .card-meta { flex: 1; }
+
+  .card-category {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    color: var(--card-color, var(--neon-cyan));
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+
+  .card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.35rem;
+    letter-spacing: 0.08em;
+    line-height: 1.1;
+    color: var(--text-primary);
+  }
+
+  .card-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    font-weight: 300;
+    flex: 1;
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .card-cta {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--card-color, var(--neon-cyan));
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .card-cta::after {
+    content: '→';
+    transition: transform 0.2s;
+  }
+
+  .channel-card:hover .card-cta::after { transform: translateX(4px); }
+
+  .card-badge {
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--card-badge-bg, rgba(0,245,255,0.1));
+    color: var(--card-color, var(--neon-cyan));
+    border: 1px solid var(--card-accent, rgba(0,245,255,0.2));
+  }
+
+  /* ─── Featured card (full-width) ─── */
+  .channel-card.featured {
+    grid-column: span 2;
+    flex-direction: row;
+  }
+
+  .channel-card.featured .card-accent-bar {
+    width: 3px;
+    height: auto;
+  }
+
+  @media (max-width: 700px) {
+    .channel-card.featured {
+      grid-column: span 1;
+      flex-direction: column;
+    }
+    .channel-card.featured .card-accent-bar {
+      width: auto;
+      height: 3px;
+    }
+    .hero-content { flex-direction: column; }
+    .hero-right { flex-direction: row; flex-wrap: wrap; }
+    .header-inner { gap: 1rem; }
+    nav.main-nav .nav-tab { padding: 8px 10px; }
+  }
+
+  /* ─── Footer ─── */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid rgba(0,245,255,0.1);
+    padding: 2.5rem 2rem;
+    text-align: center;
+  }
+
+  .footer-inner {
+    max-width: 1600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.1em;
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .footer-tagline {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .footer-url {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    color: var(--neon-cyan);
+    opacity: 0.7;
+  }
+
+  .footer-copy {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.1em;
+  }
+
+  /* ─── Animations on load ─── */
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .channel-card {
+    animation: fadeSlideUp 0.5s ease both;
+  }
+
+  .channel-card:nth-child(1)  { animation-delay: 0.05s; }
+  .channel-card:nth-child(2)  { animation-delay: 0.10s; }
+  .channel-card:nth-child(3)  { animation-delay: 0.15s; }
+  .channel-card:nth-child(4)  { animation-delay: 0.20s; }
+  .channel-card:nth-child(5)  { animation-delay: 0.25s; }
+  .channel-card:nth-child(6)  { animation-delay: 0.30s; }
+  .channel-card:nth-child(7)  { animation-delay: 0.35s; }
+  .channel-card:nth-child(8)  { animation-delay: 0.40s; }
+  .channel-card:nth-child(9)  { animation-delay: 0.45s; }
+  .channel-card:nth-child(10) { animation-delay: 0.50s; }
+  .channel-card:nth-child(11) { animation-delay: 0.55s; }
+  .channel-card:nth-child(12) { animation-delay: 0.60s; }
+  .channel-card:nth-child(13) { animation-delay: 0.65s; }
+  .channel-card:nth-child(14) { animation-delay: 0.70s; }
+  .channel-card:nth-child(15) { animation-delay: 0.75s; }
+
+  /* signal wave decoration */
+  .signal-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 20px;
+  }
+
+  .signal-bars span {
+    width: 4px;
+    border-radius: 2px;
+    background: var(--neon-cyan);
+    animation: signal-wave 1.4s ease-in-out infinite;
+    opacity: 0.7;
+  }
+
+  .signal-bars span:nth-child(1) { height: 6px; animation-delay: 0s; }
+  .signal-bars span:nth-child(2) { height: 12px; animation-delay: 0.2s; }
+  .signal-bars span:nth-child(3) { height: 18px; animation-delay: 0.4s; }
+  .signal-bars span:nth-child(4) { height: 12px; animation-delay: 0.6s; }
+  .signal-bars span:nth-child(5) { height: 6px; animation-delay: 0.8s; }
+
+  @keyframes signal-wave {
+    0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+    50% { opacity: 1; transform: scaleY(1); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════ HEADER ══════════════ -->
+<header>
+  <div class="header-inner">
+    <a class="logo-wrap" href="#">
+      <div class="logo-icon">📡</div>
+      <div class="logo-text">
+        <div class="top">Broadcasting Network</div>
+        <div class="main">Radio Meltdown</div>
+      </div>
+    </a>
+
+    <nav class="main-nav">
+      <a class="nav-tab active" href="#digital"><span class="tab-icon">📺</span>Digital</a>
+      <a class="nav-tab" href="#radio"><span class="tab-icon">🎙️</span>Radio</a>
+      <a class="nav-tab" href="#entertainment"><span class="tab-icon">🎨</span>Entertainment</a>
+      <a class="nav-tab" href="#business"><span class="tab-icon">💼</span>Business</a>
+      <a class="nav-tab" href="#lifestyle"><span class="tab-icon">🌿</span>Lifestyle</a>
+      <a class="nav-tab" href="#community"><span class="tab-icon">🤝</span>Community</a>
+      <a class="nav-tab" href="#gaming"><span class="tab-icon">🎮</span>Gaming</a>
+      <a class="nav-tab" href="#travel"><span class="tab-icon">✈️</span>Travel</a>
+      <a class="nav-tab" href="#culture"><span class="tab-icon">🎭</span>Culture</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Live Now · 24/7 Broadcasting</p>
+      <h1 class="hero-title">
+        <span class="hl-cyan">Radio</span><br>
+        <span class="hl-purple">Melt</span>down<br>
+        <span style="font-size:0.55em;color:var(--text-muted);font-family:'Rajdhani',sans-serif;font-weight:300;letter-spacing:0.15em;">YOUR VOICE. YOUR VISION. YOUR NETWORK.</span>
+      </h1>
+      <p class="hero-sub">Where independent voices become global brands.<br>Watch. Listen. Connect.</p>
+      <div class="hero-tags">
+        <span class="hero-tag">Music</span>
+        <span class="hero-tag">Podcasts</span>
+        <span class="hero-tag">Business</span>
+        <span class="hero-tag">Culture</span>
+        <span class="hero-tag">Community News</span>
+        <span class="hero-tag">Live Streaming</span>
+        <span class="hero-tag">Original Programming</span>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="live-badge"><span class="live-dot"></span> Live on Air</div>
+      <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:rgba(0,245,255,0.05);border:1px solid rgba(0,245,255,0.15);border-radius:8px;">
+        <div class="signal-bars">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div>
+          <div style="font-family:'Orbitron',sans-serif;font-size:0.6rem;letter-spacing:0.2em;color:var(--neon-cyan)">radiomeltdown.org</div>
+          <div style="font-size:0.75rem;color:var(--text-muted);letter-spacing:0.05em;">15 channels live</div>
+        </div>
+      </div>
+      <a class="cta-btn" href="http://radiomeltdown.com/" target="_blank">▶ Tune In Now</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ CHANNELS ══════════════ -->
+<div class="section-divider" id="digital">
+  <h2>STV <span>Channels</span></h2>
+  <div class="divider-line"></div>
+  <span style="font-family:'Orbitron',sans-serif;font-size:0.6rem;color:var(--text-muted);letter-spacing:0.2em;white-space:nowrap;">15 NETWORKS</span>
+</div>
+
+<div class="channel-grid">
+
+  <!-- STV Digital -->
+  <a class="channel-card" href="https://fairefaretravels.github.io/stvchanneldemo/" target="_blank"
+     style="--card-gradient:linear-gradient(90deg,#00f5ff,#0088ff);--card-accent:rgba(0,245,255,0.4);--card-glow:rgba(0,245,255,0.15);--card-color:#00f5ff;--card-icon-bg:rgba(0,245,255,0.1);--card-badge-bg:rgba(0,245,255,0.1);">
+    <div class="card-accent-bar"></div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-icon">📺</div>
+        <div class="card-meta">
+          <div class="card-category">STV Network</div>
+          <div class="card-title">STV Digital</div>
+        </div>
+      </div>
+      <p class="card-desc">Full-spectrum digital television programming. Live streams, original series, and on-demand content across every genre.</p>
+      <div class="card-footer">
+        <span class="card-cta">Watch Now</span>
+        <span class="card-badge">Live TV</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- STV Radio -->
+  <a class="channel-card featured" href="http://radiomeltdown.com/" target="_blank"
+     style="--card-gradient:linear-gradient(90deg,#ff6b00,#ff0080);--card-accent:rgba(255,107,0,0.4);--card-glow:rgba(255,107,0,0.15);--card-color:#ff6b00;--card-icon-bg:rgba(255,107,0,0.1);--card-badge-bg:rgba(255,107,0,0.1);">
+    <div class="card-accent-bar"></div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-icon" style="font-size:2rem;width:60px;height:60px;">🎙️</div>
+        <div class="card-meta">
+          <div class="card-category">STV Network · Featured</div>
+          <div class="card-title">STV Radio — Radio Meltdown</div>
+        </div>
+      </div>
+      <p class="card-desc">The flagship station. Music, talk, culture, news. 24/7 broadcasts from independent voices around the world. This is the heartbeat of the network.</p>
+      <div class="card-footer">
+        <span class="card-cta">Tune In</span>
+        <span class="card-badge" style="background:rgba(255,0,0,0.15);color:#ff4444;border-color:rgba(255,60,60,0.4);">🔴 On Air</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- STV Comics -->
+  <a class="channel-card" href="https://fairefaretravels.github.io/neverland-the-underground/" target="_blank"
+     style="--card-gradient:linear-gradient(90deg,#ff0080,#bf00ff);--card-accent:rgba(255,0,128,0.4);--card-glow:rgba(255,0,128,0.15);--card-color:#ff0080;--card-icon-bg:rgba(255,0,128,0.1);--card-badge-bg:rgba(255,0,128,0.1);" id="entertainment">
+    <div class="card-accent-bar"></div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-icon">🦸</div>
+        <div class="card-meta">
+          <div class="card-category">Entertainment</div>
+          <div class="card-title">STV Comics</div>
+        </div>
+      </div>
+      <p class="card-desc">Neverland: The Underground. Original comics, graphic novels, and illustrated stories from emerging independent creators.</p>
+      <div class="card-footer">
+        <span class="card-cta">Read Now</span>
+        <span class="card-badge">Comics</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- STV Travel -->
+  <a class="channel-card" href="https://fairefaretravels.github.io/fairefarebooking/" target="_blank"
+     style="--card-gradient:linear-gradient(90deg,#00ff88,#00c8ff);--card-accent:rgba(0,255,136,0.4);--card-glow:rgba(0,255,136,0.15);--card-color:#00ff88;--card-icon-bg:rgba(0,255,136,0.1);--card-badge-bg:rgba(0,255,136,0.1);" id="travel">
+    <div class="card-accent-bar"></div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-icon">✈️</div>
+        <div class="card-meta">
+          <div class="card-category">Travel</div>
+          <div class="card-title">STV Travel</div>
+        </div>
+      </div>
+      <p class="card-desc">Faire Fare — discover the world through authentic voices. Booking, guides, and travel storytelling from real explorers.</p>
+      <div class="card-footer">
+        <span class="card-cta">Explore</span>
+        <span class="card-badge">Book Now</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- STV XOCO -->
+  <a class="channel-card" href="https://xoco-studio.netlify.app/" target="_blank"
+     style="--card-gradient:linear-gradient(90deg,#ffc94a,#ff6b00);--card-accent:rgba(255,201,74,0.4);--card-glow:rgba(255,201,74,0.15);--card-color:#ffc94a;--card-icon-bg:rgba(255,201,74,0.1);--card-badge-bg:rgba(255,201,74,0.1);" id="culture">
+    <div class="card-accent-bar"></div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-icon">🎨</div>
+        <div class="card-meta">
+          <div class="card-category">Culture · Art</div>
+          <div class="card-title">STV XOCO</div>
+        </div>
+      </div>
+      <p class="card-desc">XOCO Studio — where art, culture, and creative vision collide. Original productions, visual arts, and cultural programming.</p>
+      <div class="card-footer">
+        <span class="card-cta">Enter Studio</span>
+        <span class="card-badge">Creative</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- STV Gaming -->
+  <a class="channel-card" href="https://fairefaretravels.github.io/Stv-Switchbladoku-/" target="_blank"
+     style="--card-gradient:linear-gradient(90deg,#bf00ff,#ff0080);--card-accent:rgba(191,0,255,0.4);--card-glow:rgba(191,0,255,0.15);--card-color:#bf00ff;--card-icon-bg:rgba(191,0,255,0.1);--card-badge-bg:rgba(191,0,255,0.1);" id="gaming">
+    <div class="card-accent-bar"></div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-icon">🎮</div>
+        <div class="card-meta">
+          <div class="card-category">Gaming</div>
+          <div class="card-title">STV Gaming</div>
+        </div>
+      </div>
+      <p class="card-desc">Switchbladoku and beyond. Interactive games, gaming culture, esports coverage, and original gaming content.</p>
+      <div class="card-footer">
+        <span class="card-cta">Play Now</span>
+        <span class="card-badge">Interactive</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- STV Community -->
+  <a class="channel-card" href="https://fairefaretravels.github.io/Stv-broadcast/" target="_blank"
+     style="--card-gradient:linear-gradient(90deg,#00c8ff,#00ff88);--card-accent:rgba(0,200,255,0.4);--card-glow:rgba(0,200,255,0.15);--card-color:#00c8ff;--card-icon-bg:rgba(0,200,255,0.1);--card-badge-bg:rgba(0,200,255,0.1);" id="community">
+    <div class="card-accent-bar"></div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-icon">🤝</div>
+        <div class="card-meta">
+          <div class="card-category">Community</div>
+          <div class="card-title">STV Community</div>
+        </div>
+      </div>
+      <p class="card-desc">Local voices, community news, and public affairs. Broadcasting the stories that matter to the neighborhoods we call home.</p>
+      <div class="card-footer">
+        <span class="card-cta">Get Involved</span>
+        <span class="card-badge">News & Local</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- STV Commercial / Corporate (Catering) -->
+  <a class="channel-card" href="https://fairefaretravels.github.io/TasteThisCateringOnline/" target="_blank"
+     style="--card-gradient:linear-gradient(90deg,#ffc94a,#e0a020);--card-accent:rgba(255,201,74,0.4);--card-glow:rgba(255,201,74,0.15);--card-color:#ffc94a;--card-icon-bg:rgba(255,201,74,0.1);--card-badge-bg:rgba(255,201,74,0.1);" id="business">
+    <div class="card-accent-bar"></div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-icon">🍽️</div>
+        <div class="card-meta">
+          <div class="card-category">Business · Catering</div>
+          <div class="card-title">STV Commercial</div>
+        </div>
+      </div>
+      <p class="card-desc">Taste This Catering — corporate events, private dining, and commercial food programming. Where business meets culinary excellence.</p>
+      <div class="card-footer">
+        <span class="card-cta">Book an Event</span>
+        <span class="card-badge">Corporate</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- STV Fit -->
+  <a class="channel-card" href="https://fairefaretravels.github.io/stv-fit/" target="_blank"
+     style="--card-gradient:linear-gradient(90deg,#00ff88,#00f5ff);--card-accent:rgba(0,255,136,0.4);--card-glow:rgba(0,255,136,0.15);--card-color:#00ff88;--card-icon-bg:rgba(0,255,136,0.1);--card-badge-bg:rgba(0,255,136,0.1);" id="lifestyle">
+    <div class="card-accent-bar"></div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-icon">💪</div>
+        <div class="card-meta">
+          <div class="card-category">Lifestyle · Fitness</div>
+          <div class="card-title">STV Fit</div>
+        </div>
+      </div>
+      <p class="card-desc">Your health, your way. Fitness programming, wellness content, workout guides, and healthy living inspiration for every body.</p>
+      <div class="card-footer">
+        <span class="card-cta">Get Moving</span>
+        <span class="card-badge">Wellness</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- STV Focus App -->
+  <a class="channel-card" href="https://focus-app-alpha-liart.vercel.app/" target="_blank"
+     style="--card-gradient:linear-gradient(90deg,#0088ff,#00f5ff);--card-accent:rgba(0,136,255,0.4);--card-glow:rgba(0,136,255,0.15);--card-color:#0088ff;--card-icon-bg:rgba(0,136,255,0.1);--card-badge-bg:rgba(0,136,255,0.1);">
+    <div class="card-accent-bar"></div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-icon">🎯</div>
+        <div class="card-meta">
+          <div class="card-category">Productivity · Tech</div>
+          <div class="card-title">STV Focus App</div>
+        </div>
+      </div>
+      <p class="card-desc">Stay sharp. The Focus App helps creators, entrepreneurs, and professionals manage their time and amplify their output.</p>
+      <div class="card-footer">
+        <span class="card-cta">Launch App</span>
+        <span class="card-badge">App</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- STV Garden -->
+  <a class="channel-card" href="https://skinmanager.vercel.app/" target="_blank"
+     style="--card-gradient:linear-gradient(90deg,#66ff44,#00ff88);--card-accent:rgba(102,255,68,0.4);--card-glow:rgba(102,255,68,0.15);--card-color:#66ff44;--card-icon-bg:rgba(102,255,68,0.1);--card-badge-bg:rgba(102,255,68,0.1);">
+    <div class="card-accent-bar"></div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-icon">🌱</div>
+        <div class="card-meta">
+          <div class="card-category">Lifestyle · Garden</div>
+          <div class="card-title">STV Garden</div>
+        </div>
+      </div>
+      <p class="card-desc">From seed to harvest. Garden management, horticulture tips, plant guides, and outdoor living content for green thumbs everywhere.</p>
+      <div class="card-footer">
+        <span class="card-cta">Grow With Us</span>
+        <span class="card-badge">Nature</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- STV Lounge -->
+  <a class="channel-card" href="https://managerpro-sable.vercel.app/" target="_blank"
+     style="--card-gradient:linear-gradient(90deg,#bf00ff,#0088ff);--card-accent:rgba(191,0,255,0.4);--card-glow:rgba(191,0,255,0.15);--card-color:#bf00ff;--card-icon-bg:rgba(191,0,255,0.1);--card-badge-bg:rgba(191,0,255,0.1);">
+    <div class="card-accent-bar"></div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-icon">🛋️</div>
+        <div class="card-meta">
+          <div class="card-category">Lifestyle · Lounge</div>
+          <div class="card-title">STV Lounge</div>
+        </div>
+      </div>
+      <p class="card-desc">The premium chill zone. Curated music mixes, talk shows, lifestyle programming, and the art of relaxed living.</p>
+      <div class="card-footer">
+        <span class="card-cta">Relax In</span>
+        <span class="card-badge">Premium</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- STV Livestock -->
+  <a class="channel-card" href="https://live-stock-demo.vercel.app/" target="_blank"
+     style="--card-gradient:linear-gradient(90deg,#e0a020,#66ff44);--card-accent:rgba(224,160,32,0.4);--card-glow:rgba(224,160,32,0.15);--card-color:#e0a020;--card-icon-bg:rgba(224,160,32,0.1);--card-badge-bg:rgba(224,160,32,0.1);">
+    <div class="card-accent-bar"></div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-icon">🐄</div>
+        <div class="card-meta">
+          <div class="card-category">Agriculture · Farming</div>
+          <div class="card-title">STV Livestock</div>
+        </div>
+      </div>
+      <p class="card-desc">Farm-to-table media. Livestock management, agricultural news, rural lifestyle, and sustainable farming content for modern producers.</p>
+      <div class="card-footer">
+        <span class="card-cta">Visit Farm</span>
+        <span class="card-badge">Agriculture</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- STV Beauty -->
+  <a class="channel-card" href="https://beautymanager-alpha.vercel.app/" target="_blank"
+     style="--card-gradient:linear-gradient(90deg,#ff0080,#ffc94a);--card-accent:rgba(255,0,128,0.4);--card-glow:rgba(255,0,128,0.15);--card-color:#ff0080;--card-icon-bg:rgba(255,0,128,0.1);--card-badge-bg:rgba(255,0,128,0.1);">
+    <div class="card-accent-bar"></div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-icon">💄</div>
+        <div class="card-meta">
+          <div class="card-category">Beauty · Wellness</div>
+          <div class="card-title">STV Beauty</div>
+        </div>
+      </div>
+      <p class="card-desc">Beauty, style, and self-expression. Tutorials, product guides, skincare routines, and content that celebrates every kind of beautiful.</p>
+      <div class="card-footer">
+        <span class="card-cta">Glow Up</span>
+        <span class="card-badge">Beauty</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- STV Coffee -->
+  <a class="channel-card" href="https://cafecoffee-iota.vercel.app/" target="_blank"
+     style="--card-gradient:linear-gradient(90deg,#e0a020,#ff6b00);--card-accent:rgba(224,160,32,0.4);--card-glow:rgba(224,160,32,0.15);--card-color:#e0a020;--card-icon-bg:rgba(224,160,32,0.1);--card-badge-bg:rgba(224,160,32,0.1);">
+    <div class="card-accent-bar"></div>
+    <div class="card-body">
+      <div class="card-header">
+        <div class="card-icon">☕</div>
+        <div class="card-meta">
+          <div class="card-category">Food &amp; Drink · Lifestyle</div>
+          <div class="card-title">STV Coffee</div>
+        </div>
+      </div>
+      <p class="card-desc">Café culture, barista craft, and coffee education. From single origins to signature drinks — the channel that lives on caffeine.</p>
+      <div class="card-footer">
+        <span class="card-cta">Brew Up</span>
+        <span class="card-badge">Café</span>
+      </div>
+    </div>
+  </a>
+
+</div><!-- /channel-grid -->
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">STV RadioMeltdown</div>
+    <p class="footer-tagline">Your Voice. Your Vision. Your Network.</p>
+    <p class="footer-url">radiomeltdown.org</p>
+    <p class="footer-copy">© Radio Meltdown · STV Network · All Rights Reserved</p>
+  </div>
+</footer>
+
+<script>
+  // Active tab highlighting on scroll
+  const tabs = document.querySelectorAll('.nav-tab');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

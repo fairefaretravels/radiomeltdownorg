@@ -1,5 +1,294 @@
-[
-  { "file": "no-body1.mp3",   "title": "No Body"      },
-  { "file": "PEICEFORME.mp3", "title": "Peice For Me" },
-  { "file": "Get Up.mp3,  " "title: "Get Up" }
-]
+{
+  "playlist": {
+    "name": "STV Radio Meltdown",
+    "curator": "STV Network",
+    "description": "The official Radio Meltdown playlist — independent voices, global sound.",
+    "station": "radiomeltdown.org",
+    "shuffle": true,
+    "tracks": [
+      {
+        "id": 1,
+        "title": "Get Up",
+        "artist": "Mackinthedark",
+        "producer": "Jupyter",
+        "album": "STV Radio Meltdown",
+        "type": "music",
+        "src": "Mackinthedark - Get Up (produced by Jupyter).mp3"
+      },
+      {
+        "id": 2,
+        "title": "Piece for Me",
+        "artist": "Brassearthling",
+        "album": "Love & Co Soundtrack",
+        "type": "music",
+        "src": "PIECE FOR ME.mp3"
+      },
+      {
+        "id": 3,
+        "title": "Distant Lover",
+        "artist": "The Switchblades",
+        "album": "STV Radio Meltdown",
+        "type": "music",
+        "src": "The Switchblades - Distant Lover.mp3"
+      },
+      {
+        "id": 4,
+        "title": "Didn't Come Home",
+        "artist": "Brassearthling",
+        "album": "Love & Co Soundtrack",
+        "type": "music",
+        "src": "Didn't Come Home.mp3"
+      },
+      {
+        "id": 5,
+        "title": "Dust On The Subwoofer",
+        "artist": "Brassearthling",
+        "album": "Love & Co Soundtrack",
+        "type": "music",
+        "src": "Dust On The Subwoofer.mp3"
+      },
+      {
+        "id": 6,
+        "title": "Alexa",
+        "artist": "Brassearthling",
+        "album": "Love & Co Soundtrack",
+        "type": "music",
+        "src": "Alexa.mp3"
+      },
+      {
+        "id": 7,
+        "title": "I Wanna Go To College",
+        "artist": "Brassearthling",
+        "album": "Love & Co Soundtrack",
+        "type": "music",
+        "src": "I Wanna Go To College.mp3"
+      },
+      {
+        "id": 8,
+        "title": "Go Crazy",
+        "artist": "Og Tuka ft. Seneca Mack",
+        "album": "STV Radio Meltdown",
+        "type": "music",
+        "src": "Go Crazy - Og Tuka ft Seneca Mack.mp3"
+      },
+      {
+        "id": 9,
+        "title": "Growing in the Dark",
+        "artist": "Brassearthling",
+        "album": "Love & Co Soundtrack",
+        "type": "music",
+        "src": "Growing in the dark.mp3"
+      },
+      {
+        "id": 10,
+        "title": "iSoLuv",
+        "artist": "Brassearthling",
+        "producer": "FRQSY",
+        "album": "Love & Co Soundtrack",
+        "type": "music",
+        "src": "iSoLuv (prod by FRQSY).mp3"
+      },
+      {
+        "id": 11,
+        "title": "Recalibrate",
+        "artist": "Brassearthling",
+        "album": "Love & Co Soundtrack",
+        "type": "music",
+        "src": "Recalibrate.mp3"
+      },
+      {
+        "id": 12,
+        "title": "Rub My Body Down",
+        "artist": "Brassearthling",
+        "album": "Love & Co Soundtrack",
+        "type": "music",
+        "src": "Rub My Body Down.mp3"
+      },
+      {
+        "id": 13,
+        "title": "Skin I'm In",
+        "artist": "Brassearthling",
+        "album": "Love & Co Soundtrack",
+        "type": "music",
+        "src": "Skin I'm In.mp3"
+      },
+      {
+        "id": 14,
+        "title": "Slow Dance",
+        "artist": "Brassearthling",
+        "album": "Love & Co Soundtrack",
+        "type": "music",
+        "src": "Slow Dance.mp3"
+      },
+      {
+        "id": 15,
+        "title": "STV Radiomeltdown",
+        "artist": "Radio Meltdown",
+        "album": "STV Radio Meltdown",
+        "type": "station-id",
+        "src": "STV RADIOMELTDOWN.mp3"
+      },
+      {
+        "id": 16,
+        "title": "Tattoo Like A Scar",
+        "artist": "Brassearthling",
+        "album": "Love & Co Soundtrack",
+        "type": "music",
+        "src": "Tattoo Like A Scar.mp3"
+      },
+      {
+        "id": 17,
+        "title": "Blow",
+        "artist": "Brassearthling",
+        "album": "Love & Co Soundtrack",
+        "type": "music",
+        "src": "Blow.mp3"
+      },
+      {
+        "id": 18,
+        "title": "Calling Your Phone",
+        "artist": "Brassearthling",
+        "album": "Love & Co Soundtrack",
+        "type": "music",
+        "src": "Calling Your Phone.mp3"
+      },
+      {
+        "id": 19,
+        "title": "Hanging With My N Base",
+        "artist": "Uncle Base",
+        "album": "STV Radio Meltdown",
+        "type": "music",
+        "src": "Uncle Base - Hanging With My N Base.mp3"
+      },
+      {
+        "id": 20,
+        "title": "TV Lounge",
+        "artist": "Brassearthling",
+        "album": "Love & Co Soundtrack",
+        "type": "music",
+        "src": "TV Lounge.mp3"
+      },
+      {
+        "id": 21,
+        "title": "Dock Of The Bay",
+        "artist": "Uncle Base",
+        "album": "STV Radio Meltdown",
+        "type": "music",
+        "src": "Uncle Base - Dock Of The Bay.mp3"
+      },
+      {
+        "id": 22,
+        "title": "You So Good",
+        "artist": "Brassearthling",
+        "album": "Love & Co Soundtrack",
+        "type": "music",
+        "src": "You So Good.mp3"
+      },
+      {
+        "id": 23,
+        "title": "Throwback",
+        "artist": "Al Luv ft. The Switchblades",
+        "album": "STV Radio Meltdown",
+        "type": "music",
+        "src": "Al Luv - Throwback ft The Switchblades.mp3"
+      },
+      {
+        "id": 24,
+        "title": "More Fire",
+        "artist": "The Switchblades",
+        "album": "STV Radio Meltdown",
+        "type": "music",
+        "src": "The Switchblades - More Fire.mp3"
+      },
+      {
+        "id": 25,
+        "title": "Honey",
+        "artist": "The Switchblades",
+        "album": "STV Radio Meltdown",
+        "type": "music",
+        "src": "The Switchblades - Honey.mp3"
+      },
+      {
+        "id": 26,
+        "title": "Ghetto Matrix",
+        "artist": "The Switchblades",
+        "album": "STV Radio Meltdown",
+        "type": "music",
+        "src": "The Switchblades - Ghetto Matrix.mp3"
+      },
+      {
+        "id": 27,
+        "title": "No Body Dancing",
+        "artist": "Brassearthling",
+        "album": "Love & Co Soundtrack",
+        "type": "music",
+        "src": "No Body Dancing.mp3"
+      },
+      {
+        "id": 28,
+        "title": "Neverland",
+        "artist": "Brassearthling",
+        "album": "Love & Co Soundtrack",
+        "type": "music",
+        "src": "Neverland.mp3"
+      },
+      {
+        "id": 29,
+        "title": "New Music Drop",
+        "artist": "Radio Meltdown",
+        "album": "STV Radio Meltdown",
+        "type": "station-id",
+        "src": "New Music Drop.mp3"
+      },
+      {
+        "id": 30,
+        "title": "Alright",
+        "artist": "Brassearthling",
+        "album": "Love & Co Soundtrack",
+        "type": "music",
+        "src": "Alright.mp3"
+      },
+      {
+        "id": 31,
+        "title": "Best Day Ever",
+        "artist": "Brassearthling",
+        "album": "Love & Co Soundtrack",
+        "type": "music",
+        "src": "Best Day Ever.mp3"
+      }
+    ],
+    "artists": [
+      {
+        "name": "Brassearthling",
+        "note": "Love & Co Soundtrack — all untitled/solo tracks"
+      },
+      {
+        "name": "The Switchblades",
+        "tracks": ["Distant Lover", "More Fire", "Honey", "Ghetto Matrix"]
+      },
+      {
+        "name": "Mackinthedark",
+        "tracks": ["Get Up"]
+      },
+      {
+        "name": "Og Tuka",
+        "tracks": ["Go Crazy"]
+      },
+      {
+        "name": "Uncle Base",
+        "tracks": ["Hanging With My N Base", "Dock Of The Bay"]
+      },
+      {
+        "name": "Al Luv",
+        "tracks": ["Throwback"]
+      }
+    ],
+    "stats": {
+      "total_tracks": 31,
+      "station_ids": 2,
+      "music_tracks": 29,
+      "artists": 6,
+      "brassearthling_tracks": 19
+    }
+  }
+}

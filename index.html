@@ -814,16 +814,15 @@
 
 <script>
 // ── PLAYLIST (JSON-driven, uses free CC0 demo mp3s from freesound/pixabay proxy) ──
-const PLAYLIST = [
-  { title:"Neon Nights",       artist:"Radio Meltdown FM",   emoji:"🎸", src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
-  { title:"City Pulse",        artist:"STV Radio Live",      emoji:"🎹", src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
-  { title:"Independent Wave",  artist:"The Meltdown Sessions",emoji:"🥁", src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" },
-  { title:"Broadcast Signal",  artist:"Radio Meltdown FM",   emoji:"🎺", src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" },
-  { title:"Deep Transmission", artist:"STV Underground",     emoji:"🎷", src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3" },
-  { title:"Global Culture",    artist:"Radio Meltdown FM",   emoji:"🎻", src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3" },
-  { title:"Morning Drive",     artist:"STV Lounge",          emoji:"🎵", src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3" },
-  { title:"Midnight Groove",   artist:"The Meltdown Sessions",emoji:"🎤", src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" },
-];
+let PLAYLIST = [];
+
+fetch(’./playlist.json’)
+.then(response => response.json())
+.then(data => {
+PLAYLIST = data;
+queue = […PLAYLIST];
+loadTrack(0);
+});
 
 let queue = [...PLAYLIST];
 let idx = 0;

@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="STV Radio">
+  <meta name="description" content="STV Radiomeltdown — Independent broadcast from Lithonia, GA. Indie artists, underground talent, mainstream acts and AI music. Culture-driven. Community-built. Always live.">
+  <meta name="theme-color" content="#07150e">
+  <title>STV Radiomeltdown — Live From Lithonia, GA</title>
+  <link rel="manifest" href="/manifest.json">
+
+  <style>
+    /* ── RESET & BASE ─────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:        #07150e;
+      --bg2:       #0d1f14;
+      --bg3:       #111f16;
+      --gold:      #c8a84b;
+      --gold2:     #e8c86a;
+      --green:     #1a3a22;
+      --text:      #e8e0d0;
+      --muted:     #8a9a8a;
+      --border:    #1e3424;
+      --red:       #c0392b;
+      --ff-display: 'Georgia', 'Times New Roman', serif;
+      --ff-body:    system-ui, -apple-system, sans-serif;
+      --ff-mono:    'Courier New', monospace;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--ff-body);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    a { color: var(--gold); text-decoration: none; }
+    a:hover { color: var(--gold2); }
+    img { max-width: 100%; display: block; }
+    iframe { border: none; }
+
+    /* ── TICKER ───────────────────────────────────────── */
+    .ticker-wrap {
+      background: var(--gold);
+      color: #000;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 6px 0;
+    }
+    .ticker-track {
+      display: inline-block;
+      animation: ticker 50s linear infinite;
+    }
+    .ticker-track span { margin: 0 40px; }
+    @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+    /* ── HERO ─────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      padding: 20px;
+    }
+    .hero-video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: .18;
+      z-index: 0;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(7,21,14,.3) 0%, rgba(7,21,14,.8) 100%);
+      z-index: 1;
+    }
+    .hero-content { position: relative; z-index: 2; }
+    .hero-eyebrow {
+      font-family: var(--ff-mono);
+      font-size: 11px;
+      letter-spacing: .2em;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .hero-logo {
+      font-family: var(--ff-display);
+      font-size: clamp(52px, 12vw, 120px);
+      font-weight: 700;
+      line-height: .9;
+      letter-spacing: -.02em;
+      color: var(--text);
+    }
+    .hero-logo span { color: var(--gold); }
+    .hero-sub {
+      font-family: var(--ff-mono);
+      font-size: 13px;
+      letter-spacing: .15em;
+      color: var(--muted);
+      margin-top: 12px;
+    }
+    .hero-cta {
+      margin-top: 36px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--gold);
+      color: #000;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: .1em;
+      padding: 14px 32px;
+      border-radius: 2px;
+      cursor: pointer;
+      border: none;
+      transition: background .2s;
+    }
+    .hero-cta:hover { background: var(--gold2); }
+    .live-dot {
+      width: 8px; height: 8px;
+      background: var(--red);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%,100%{ opacity:1; transform:scale(1); }
+      50%{ opacity:.4; transform:scale(.8); }
+    }
+
+    /* ── STICKY NAV ───────────────────────────────────── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(7,21,14,.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      height: 52px;
+    }
+    .nav-brand {
+      font-family: var(--ff-display);
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text);
+      letter-spacing: .05em;
+    }
+    .nav-brand span { color: var(--gold); }
+    .nav-tabs {
+      display: flex;
+      gap: 4px;
+      list-style: none;
+    }
+    .nav-tabs a {
+      display: block;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      color: var(--muted);
+      border-radius: 2px;
+      transition: all .15s;
+    }
+    .nav-tabs a:hover,
+    .nav-tabs a.active {
+      color: var(--gold);
+      background: var(--green);
+    }
+
+    /* ── TAB PANELS ───────────────────────────────────── */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── PLAYER STRIP ─────────────────────────────────── */
+    .player-strip {
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .player-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .player-station-name {
+      font-family: var(--ff-display);
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .player-meta {
+      font-size: 11px;
+      color: var(--muted);
+      font-family: var(--ff-mono);
+      letter-spacing: .05em;
+    }
+    .live-badge {
+      background: var(--red);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      padding: 3px 8px;
+      border-radius: 2px;
+    }
+    #play-btn {
+      background: var(--gold);
+      color: #000;
+      border: none;
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .2s;
+      flex-shrink: 0;
+    }
+    #play-btn:hover { background: var(--gold2); }
+    #audio-player { display: none; }
+
+    /* ── SECTION GENERIC ──────────────────────────────── */
+    .section { padding: 60px 24px; max-width: 960px; margin: 0 auto; }
+    .section-sm { padding: 40px 24px; max-width: 960px; margin: 0 auto; }
+    .section-label {
+      font-family: var(--ff-mono);
+      font-size: 10px;
+      letter-spacing: .2em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: var(--ff-display);
+      font-size: clamp(24px, 5vw, 40px);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0 24px;
+    }
+
+    /* ── GRID CARDS ───────────────────────────────────── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: border-color .2s;
+    }
+    .card:hover { border-color: var(--gold); }
+    .card-body { padding: 16px; }
+    .card-eyebrow {
+      font-size: 10px;
+      letter-spacing: .15em;
+      color: var(--gold);
+      font-family: var(--ff-mono);
+      margin-bottom: 4px;
+    }
+    .card-title {
+      font-family: var(--ff-display);
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .card-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+    .card-link {
+      display: inline-block;
+      margin-top: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      color: var(--gold);
+      border-bottom: 1px solid transparent;
+    }
+    .card-link:hover { border-color: var(--gold); }
+
+    /* ── EMBED GRID ───────────────────────────────────── */
+    .embed-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+    .embed-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .embed-card-header {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .embed-card-title {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .08em;
+    }
+    .embed-card iframe { width: 100%; }
+
+    /* ── ARTIST BLOCK ─────────────────────────────────── */
+    .artist-block {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 32px;
+      margin-top: 32px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    .artist-avatar {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--ff-display);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+    .artist-name {
+      font-family: var(--ff-display);
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .artist-title { font-size: 12px; color: var(--gold); letter-spacing: .1em; margin-top: 2px; }
+    .artist-bio { font-size: 13px; color: var(--muted); margin-top: 12px; line-height: 1.6; }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+    .tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      padding: 3px 8px;
+      background: var(--green);
+      color: var(--gold);
+      border-radius: 2px;
+    }
+
+    /* ── STATIC / NEWSLETTER ──────────────────────────── */
+    .static-hero {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 32px;
+      margin-top: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .static-vol {
+      font-family: var(--ff-mono);
+      font-size: 10px;
+      letter-spacing: .2em;
+      color: var(--muted);
+    }
+    .static-title {
+      font-family: var(--ff-display);
+      font-size: clamp(28px, 6vw, 52px);
+      font-weight: 700;
+      line-height: 1;
+      margin: 8px 0 4px;
+    }
+    .static-sub { color: var(--muted); font-size: 13px; }
+    .static-cover {
+      font-size: 13px;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .static-cover strong { color: var(--gold); }
+
+    /* ── DJ ROSTER ────────────────────────────────────── */
+    .dj-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .dj-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 20px;
+      text-align: center;
+      transition: border-color .2s;
+    }
+    .dj-card:hover { border-color: var(--gold); }
+    .dj-initials {
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: var(--green);
+      border: 2px solid var(--gold);
+      font-family: var(--ff-display);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+    }
+    .dj-name { font-weight: 700; font-size: 14px; }
+    .dj-bio { font-size: 12px; color: var(--muted); margin-top: 6px; }
+
+    /* ── PROMO TAB ────────────────────────────────────── */
+    .promo-hero {
+      background: linear-gradient(135deg, var(--bg2) 0%, var(--green) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 48px 24px;
+      text-align: center;
+    }
+    .promo-hero .section-label { margin-bottom: 12px; }
+    .promo-hero h2 {
+      font-family: var(--ff-display);
+      font-size: clamp(28px, 6vw, 52px);
+      font-weight: 700;
+      line-height: 1.1;
+    }
+    .promo-hero p { color: var(--muted); margin-top: 10px; font-size: 14px; }
+
+    .promo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 32px;
+    }
+    .promo-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .promo-card-video { width: 100%; aspect-ratio: 16/9; background: #000; }
+    .promo-card-video iframe { width: 100%; height: 100%; }
+    .promo-card-body { padding: 16px; }
+    .promo-card-title { font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+    .promo-card-desc { font-size: 12px; color: var(--muted); }
+    .promo-card-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      padding: 2px 6px;
+      background: var(--green);
+      color: var(--gold);
+      border-radius: 2px;
+      margin-bottom: 8px;
+    }
+
+    .promo-cta-strip {
+      background: var(--gold);
+      color: #000;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .promo-cta-strip h3 {
+      font-family: var(--ff-display);
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .promo-cta-strip p { font-size: 13px; margin-bottom: 16px; opacity: .8; }
+    .btn-dark {
+      display: inline-block;
+      background: #000;
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: .1em;
+      padding: 12px 28px;
+      border-radius: 2px;
+    }
+    .btn-dark:hover { background: #111; color: var(--gold2); }
+
+    /* ── ABOUT TAB ────────────────────────────────────── */
+    .about-hero {
+      padding: 60px 24px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .about-stat-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 16px;
+      margin: 32px 0;
+    }
+    .about-stat {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 20px;
+      text-align: center;
+    }
+    .about-stat-num {
+      font-family: var(--ff-display);
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .about-stat-label { font-size: 11px; color: var(--muted); margin-top: 4px; letter-spacing: .08em; }
+    .about-body { font-size: 15px; line-height: 1.8; color: var(--muted); }
+    .about-body p { margin-bottom: 16px; }
+    .about-body strong { color: var(--text); }
+
+    /* ── SHOWS TAB ────────────────────────────────────── */
+    .show-list { margin-top: 24px; display: flex; flex-direction: column; gap: 1px; }
+    .show-item {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      transition: border-color .2s;
+    }
+    .show-item:hover { border-color: var(--gold); }
+    .show-num {
+      font-family: var(--ff-mono);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--gold);
+      min-width: 36px;
+    }
+    .show-info { flex: 1; }
+    .show-title { font-weight: 700; font-size: 16px; }
+    .show-host { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .show-desc { font-size: 13px; color: var(--muted); margin-top: 6px; }
+    .show-time {
+      font-family: var(--ff-mono);
+      font-size: 11px;
+      color: var(--gold);
+      letter-spacing: .06em;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    /* ── SPONSOR STRIP ────────────────────────────────── */
+    .sponsor-strip {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 28px 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .sponsor-label {
+      font-size: 10px;
+      letter-spacing: .15em;
+      color: var(--gold);
+      font-family: var(--ff-mono);
+      flex-shrink: 0;
+    }
+    .sponsor-body { font-size: 13px; color: var(--muted); flex: 1; }
+    .sponsor-body strong { color: var(--text); }
+
+    /* ── LIVE STREAMS ─────────────────────────────────── */
+    .stream-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .stream-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .stream-card-header {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .stream-card-title { font-weight: 700; font-size: 13px; }
+    .stream-card-sub { font-size: 11px; color: var(--muted); }
+    .stream-load-btn {
+      background: var(--green);
+      border: 1px solid var(--border);
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 12px;
+      padding: 8px 16px;
+      margin: 16px;
+      border-radius: 2px;
+      cursor: pointer;
+      width: calc(100% - 32px);
+    }
+    .stream-load-btn:hover { background: var(--gold); color: #000; }
+
+    /* ── TRAVEL / PARTNER STRIP ───────────────────────── */
+    .travel-strip {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 32px;
+      margin-top: 24px;
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .travel-img {
+      width: 160px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+    .travel-body h3 {
+      font-family: var(--ff-display);
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .travel-body p { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+    .link-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .link-pill {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      padding: 6px 12px;
+      background: var(--green);
+      color: var(--gold);
+      border-radius: 2px;
+    }
+    .link-pill:hover { background: var(--gold); color: #000; }
+
+    /* ── CONNECT STRIP ────────────────────────────────── */
+    .connect-strip {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+      text-align: center;
+    }
+    .connect-strip .section-label { margin-bottom: 8px; }
+    .connect-strip h2 {
+      font-family: var(--ff-display);
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .connect-strip p { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+    .connect-btns { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+    .btn-gold {
+      display: inline-block;
+      background: var(--gold);
+      color: #000;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: .1em;
+      padding: 12px 24px;
+      border-radius: 2px;
+    }
+    .btn-gold:hover { background: var(--gold2); color: #000; }
+    .btn-outline {
+      display: inline-block;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: .1em;
+      padding: 12px 24px;
+      border-radius: 2px;
+    }
+    .btn-outline:hover { background: var(--gold); color: #000; }
+
+    /* ── FOOTER ───────────────────────────────────────── */
+    footer {
+      background: #04100a;
+      border-top: 1px solid var(--border);
+      padding: 40px 24px 24px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 32px;
+      max-width: 960px;
+      margin: 0 auto 32px;
+    }
+    .footer-heading {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .15em;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 8px; }
+    .footer-links a { font-size: 13px; color: var(--muted); }
+    .footer-links a:hover { color: var(--text); }
+    .footer-bottom {
+      max-width: 960px;
+      margin: 0 auto;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* ── PWA INSTALL BANNER ───────────────────────────── */
+    #pwa-banner {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: var(--bg2);
+      border-top: 1px solid var(--gold);
+      padding: 12px 20px;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 999;
+      font-size: 13px;
+    }
+    #pwa-banner.show { display: flex; }
+    #pwa-install-btn {
+      background: var(--gold);
+      color: #000;
+      border: none;
+      font-weight: 700;
+      font-size: 12px;
+      padding: 8px 16px;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+    #pwa-dismiss-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 18px;
+      cursor: pointer;
+      padding: 0 8px;
+    }
+
+    /* ── RESPONSIVE ───────────────────────────────────── */
+    @media (max-width: 600px) {
+      .nav { padding: 0 14px; }
+      .nav-tabs a { padding: 6px 10px; font-size: 11px; }
+      .artist-block { grid-template-columns: 1fr; }
+      .travel-strip { flex-direction: column; }
+      .travel-img { width: 100%; height: 180px; }
+      .show-item { flex-wrap: wrap; }
+      .show-time { width: 100%; text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span>SANECA TV · LITHONIA GA · HOUSE OF MEDIA</span>
+    <span>LIVE BROADCAST NOW STREAMING</span>
+    <span>NEW MUSIC — EMIL GORDON SR FEAT. RISK "CRUIZN'"</span>
+    <span>UNCLE BASE · MS. CANDY · ISOLUV · G4E SOULJA · AND MORE</span>
+    <span>MEET THE SWITCHBLADES · DETROIT GHETTO TECH</span>
+    <span>THE STATIC ISSUE 02 — TONY T MONEY GREEN COVER STORY — OUT NOW</span>
+    <span>EXCLUSIVE INTERVIEW WITH PROFESSOR GRIFF</span>
+    <span>LOVE &amp; CO — FEATURED ARTIST SPOTLIGHT</span>
+    <span>FOLLOW @STVRADIOMELTDOWN ON TIKTOK AND YOUTUBE</span>
+    <span>WANT FREE RADIO PLAY? CONTACT US TODAY</span>
+    <span>STV MEDIA GROUP — JOIN THE NETWORK</span>
+    <span>BARTENDING AND DJ SERVICES — MACK MAGIC MOBILE BAR</span>
+    <!-- duplicate for seamless loop -->
+    <span>SANECA TV · LITHONIA GA · HOUSE OF MEDIA</span>
+    <span>LIVE BROADCAST NOW STREAMING</span>
+    <span>NEW MUSIC — EMIL GORDON SR FEAT. RISK "CRUIZN'"</span>
+    <span>UNCLE BASE · MS. CANDY · ISOLUV · G4E SOULJA · AND MORE</span>
+    <span>MEET THE SWITCHBLADES · DETROIT GHETTO TECH</span>
+    <span>THE STATIC ISSUE 02 — TONY T MONEY GREEN COVER STORY — OUT NOW</span>
+    <span>EXCLUSIVE INTERVIEW WITH PROFESSOR GRIFF</span>
+    <span>LOVE &amp; CO — FEATURED ARTIST SPOTLIGHT</span>
+    <span>FOLLOW @STVRADIOMELTDOWN ON TIKTOK AND YOUTUBE</span>
+    <span>WANT FREE RADIO PLAY? CONTACT US TODAY</span>
+    <span>STV MEDIA GROUP — JOIN THE NETWORK</span>
+    <span>BARTENDING AND DJ SERVICES — MACK MAGIC MOBILE BAR</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="blades1.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Lithonia, GA · House of Media · Est. 2012</p>
+    <h1 class="hero-logo">STV<br><span>RADIO</span></h1>
+    <p class="hero-sub">Culture-driven. Community-built. Always live.</p>
+    <button class="hero-cta" onclick="tuneIn()">
+      <span class="live-dot"></span>
+      TUNE IN
+    </button>
+  </div>
+</section>
+
+<!-- STICKY NAV -->
+<nav class="nav">
+  <div class="nav-brand">STV <span>RADIO</span></div>
+  <ul class="nav-tabs">
+    <li><a href="#radio" class="tab-link active" data-tab="radio">Radio</a></li>
+    <li><a href="#shows" class="tab-link" data-tab="shows">Shows</a></li>
+    <li><a href="#promo" class="tab-link" data-tab="promo">Promo</a></li>
+    <li><a href="#about" class="tab-link" data-tab="about">About</a></li>
+  </ul>
+</nav>
+
+<!-- PLAYER STRIP -->
+<div class="player-strip">
+  <div class="player-left">
+    <button id="play-btn" onclick="togglePlay()" title="Play / Pause">▶</button>
+    <div>
+      <div class="player-station-name">STV Radiomeltdown</div>
+      <div class="player-meta">🔈 LIVE — Lithonia, GA</div>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;">
+    <span class="live-badge">LIVE</span>
+    <span style="font-size:12px;color:var(--muted);">678-433-8772</span>
+  </div>
+</div>
+<audio id="audio-player" src="https://listen.streamaudio.co/proxy/sanecatv/stream"></audio>
+
+<!-- ══════════════════════════════════════════════════════
+     TAB: RADIO
+═══════════════════════════════════════════════════════ -->
+<div id="tab-radio" class="tab-panel active">
+
+  <!-- SPONSOR -->
+  <div class="sponsor-strip">
+    <span class="sponsor-label">PROUD SPONSOR</span>
+    <p class="sponsor-body">
+      <strong>Give-a-Gift Non-Profit</strong> — Want free radio play? Need free promo? Support artists in tech.
+      Give-a-Gift is a 501(c)3 Non-Profit supporting community growth in technology by empowering creatives.
+    </p>
+    <a href="https://formspree.io/f/mrbkljze" target="_blank" rel="noopener" class="btn-outline" style="font-size:11px;padding:8px 16px;">Learn More →</a>
+  </div>
+
+  <!-- SPOTIFY PODCAST -->
+  <div class="section">
+    <div class="section-label">STV Podcast</div>
+    <div class="section-title">I'm Off My Meds</div>
+    <iframe
+      src="https://open.spotify.com/embed/show/3lxIO679bCt15UJ3jUUYXV?utm_source=generator&theme=0"
+      width="100%" height="152" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      loading="lazy" style="margin-top:16px;border-radius:4px;">
+    </iframe>
+  </div>
+
+  <hr class="divider">
+
+  <!-- FEATURED ORIGINALS -->
+  <div class="section">
+    <div class="section-label">STV Network Originals &amp; Features</div>
+    <div class="section-title">Featured</div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-eyebrow">Original Graphic Novel</div>
+          <div class="card-title">NEVERLAND: The Underground</div>
+          <p class="card-desc">"Every fairy tale has a Hook." — An original STV graphic novel series.</p>
+          <a href="https://fairefaretravels.github.io/neverland-the-underground/" target="_blank" rel="noopener" class="card-link">Read Chapter One →</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="card-eyebrow">STV Network · New Music</div>
+          <div class="card-title">CRUIZN — Emil D. Gordon Sr. feat. Risk</div>
+          <p class="card-desc">Latest single from STV artist Emil D. Gordon Sr., now streaming.</p>
+          <a href="https://fairefaretravels.github.io/STV-ONAIR/emilgordonsr-static/" target="_blank" rel="noopener" class="card-link">View Artist Page →</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="card-eyebrow">STV Store · Events</div>
+          <div class="card-title">Mack Magic Mobile Bar</div>
+          <p class="card-desc">Bartending &amp; DJ services for your next event. Book us today.</p>
+          <a href="https://radiomeltdown.store" target="_blank" rel="noopener" class="card-link">Book Now →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- FEATURED SEGMENTS (video) -->
+  <div class="section">
+    <div class="section-label">Promos &amp; Highlights</div>
+    <div class="section-title">Featured Segments</div>
+    <div class="embed-grid">
+      <div class="embed-card">
+        <div class="embed-card-header">
+          <div>
+            <div class="embed-card-title">Slept On: G4E Souljah</div>
+            <div style="font-size:11px;color:var(--muted);">Indie Feature</div>
+          </div>
+        </div>
+        <iframe src="https://www.youtube.com/embed/UFHOsQ_msNE?si=xubW8iTC1TmocLy6" height="200" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+      </div>
+      <div class="embed-card">
+        <div class="embed-card-header">
+          <div>
+            <div class="embed-card-title">The Static — On YouTube</div>
+            <div style="font-size:11px;color:var(--muted);">Playlist</div>
+          </div>
+        </div>
+        <iframe src="https://www.youtube.com/embed/videoseries?list=PLQ9p6GARi5fDbBC-zfAVIv3-C64qefM_H" height="200" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ARTIST SPOTLIGHT -->
+  <div class="section">
+    <div class="section-label">Artist Spotlight</div>
+    <div class="section-title">Featured on STV Radiomeltdown</div>
+    <div class="artist-block">
+      <div class="artist-avatar">DM</div>
+      <div>
+        <div class="artist-name">DJ Mackinthedark</div>
+        <div class="artist-title">CREATOR OF LOVE&amp;CO · DETROIT, MI</div>
+        <p class="artist-bio">
+          <em>ADHD on Wax. Sound Without Borders.</em><br><br>
+          DJ Mackinthedark is the creator of LOVE&CO and the kind of artist who doesn't ask permission from a genre.
+          A proud member of <strong>The Switchblades out of Detroit</strong>, she's built her sound the hard way —
+          by feeling it out, blending the unexpected, and refusing to let any single box hold her.
+        </p>
+        <div class="tag-row">
+          <span class="tag">LOVE&CO</span>
+          <span class="tag">The Switchblades</span>
+          <span class="tag">Detroit</span>
+          <span class="tag">Genre-bending</span>
+        </div>
+        <div style="margin-top:16px;">
+          <iframe src="https://www.youtube.com/embed/ubpj6amPnPI?si=pXol0sDdNxdAY-7L" width="100%" height="200" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy" style="border-radius:4px;"></iframe>
+        </div>
+        <a href="https://youtube.com/playlist?list=PLQ9p6GARi5fCwyLtEjrVWXyPXLzExEhTw&si=jAstYK6ZdeKEIc8T" target="_blank" rel="noopener" class="card-link" style="margin-top:10px;">🎵 LOVE&CO Full Playlist →</a>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- THE STATIC -->
+  <div class="section">
+    <div class="section-label">STV Radiomeltdown Newsletter</div>
+    <div class="section-title">The Static</div>
+    <div class="static-hero">
+      <div class="static-vol">Vol. 1 · Issue 02 · May 2026 · STV Radiomeltdown · Lithonia, GA</div>
+      <div class="static-title">The Static</div>
+      <div class="static-sub">Where music meets the moment</div>
+      <div class="static-cover">
+        <p><strong>Cover Story:</strong> The Bass Line That Built G-Funk — Tony "T Money" Green and the Detroit Sound That Changed Everything.</p>
+        <p>Before Snoop. Before Tupac. Before Dre built the sound that defined a decade — there was a bass player from Detroit. Band director at Death Row. Co-writer of Parliament. And he's on our cover.</p>
+        <a href="https://fairefaretravels.github.io/TheStatic/" target="_blank" rel="noopener" class="btn-gold" style="margin-top:16px;display:inline-block;font-size:12px;">Read The Static →</a>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- LIVE STREAMS -->
+  <div class="section">
+    <div class="section-label">STV Radiomeltdown</div>
+    <div class="section-title">Live — Watch on Kick or YouTube</div>
+    <div class="stream-grid">
+      <div class="stream-card">
+        <div class="stream-card-header">
+          <div>
+            <div class="stream-card-title">Kick — STVNETWORK</div>
+            <div class="stream-card-sub">Live streaming platform</div>
+          </div>
+          <a href="https://kick.com/STVNETWORK" target="_blank" rel="noopener" style="font-size:11px;color:var(--gold);">Watch →</a>
+        </div>
+        <button class="stream-load-btn" onclick="loadKick(this)">▶ Load Live Stream</button>
+      </div>
+      <div class="stream-card">
+        <div class="stream-card-header">
+          <div>
+            <div class="stream-card-title">YouTube — Live</div>
+            <div class="stream-card-sub">Subscribe for live alerts</div>
+          </div>
+          <a href="https://youtube.com/channel/lFvfBqhziE0" target="_blank" rel="noopener" style="font-size:11px;color:var(--gold);">Subscribe →</a>
+        </div>
+        <button class="stream-load-btn" onclick="loadYT(this)">▶ Load YouTube Live</button>
+      </div>
+      <div class="stream-card">
+        <div class="stream-card-header">
+          <div>
+            <div class="stream-card-title">Live Studio — Guest Feed</div>
+            <div class="stream-card-sub">VDO.Ninja · CH3</div>
+          </div>
+        </div>
+        <button class="stream-load-btn" onclick="loadVDO(this)">▶ Load Studio Feed</button>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- PLAY WHILE YOU LISTEN -->
+  <div class="section">
+    <div class="section-label">The Switchblades · Game Series</div>
+    <div class="section-title">Play While You Listen</div>
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:28px;margin-top:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;">
+      <div>
+        <div style="font-family:var(--ff-display);font-size:22px;font-weight:700;">SWITCHBLADOKU</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:6px;">Sudoku with a soundtrack. Load your own MP3s and solve puzzles with STV in your ears.</div>
+      </div>
+      <a href="https://fairefaretravels.github.io/Stv-Switchbladoku-/" target="_blank" rel="noopener" class="btn-gold">⚡ Play Now</a>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- LOST IN THE SAUCE -->
+  <div class="section">
+    <div class="section-label">The So Luv Radio Show · Deep Cuts</div>
+    <div class="section-title">Lost in the Sauce</div>
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:28px;margin-top:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;">
+      <div>
+        <div style="font-size:15px;font-weight:600;">Three Rick James Tracks the World Walked Right Past</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:6px;">Everybody knows Super Freak. But Rick James was a full catalog artist.</div>
+      </div>
+      <a href="https://youtube.com/playlist?list=PLQ9p6GARi5fD6uTCIuUC17ZQA7KN_wkm4&si=8XEMk6qB59aW6Q48" target="_blank" rel="noopener" class="btn-outline">STV Flashback →</a>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- TRAVEL PARTNER -->
+  <div class="section">
+    <div class="section-label">Faire Fare Travels · Curated Escapes</div>
+    <div class="section-title">Travel With Us</div>
+    <div class="travel-strip">
+      <img src="https://fairefaretravels.github.io/agent-sanecamack/fairefaretravels1.jpeg" alt="Faire Fare Travels" class="travel-img">
+      <div class="travel-body">
+        <h3>Go Further. Spend Smarter.</h3>
+        <p>Luxury travel. Honest prices. Curated flights, hotels, and all-inclusive escapes — without the markup. Built for people who move with intention.</p>
+        <div class="link-row">
+          <a href="https://expedia.com/affiliates/fair_fare_travels" target="_blank" rel="noopener" class="link-pill">Flights via Expedia →</a>
+          <a href="https://www.hotels.com/affiliates/fair_fare_travels" target="_blank" rel="noopener" class="link-pill">Hotels.com →</a>
+          <a href="https://vrbo.com/affiliates/fair_fare_travels" target="_blank" rel="noopener" class="link-pill">All-Inclusive via Vrbo →</a>
+          <a href="https://fairefaretravels.github.io/agent-sanecamack/" target="_blank" rel="noopener" class="link-pill">✈ Start Planning</a>
+          <a href="https://fairefaretravels.github.io/group-planner/" target="_blank" rel="noopener" class="link-pill">👥 Group Planner</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIVE CHAT -->
+  <div class="section">
+    <div class="section-label">STV Live Chat</div>
+    <div class="section-title">Heartbeat of the Movement</div>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:16px;">Keep it respectful. Your messages may be read on air.</p>
+    <iframe src="https://tlk.io/sanecatv" width="100%" height="400" style="border:1px solid var(--border);border-radius:4px;" loading="lazy"></iframe>
+  </div>
+
+</div><!-- /tab-radio -->
+
+<!-- ══════════════════════════════════════════════════════
+     TAB: SHOWS
+═══════════════════════════════════════════════════════ -->
+<div id="tab-shows" class="tab-panel">
+  <div class="section">
+    <div class="section-label">Programming</div>
+    <div class="section-title">STV Shows &amp; Segments</div>
+
+    <div class="show-list">
+      <div class="show-item">
+        <div class="show-num">01</div>
+        <div class="show-info">
+          <div class="show-title">So Luv Radio Show</div>
+          <div class="show-host">Hosted by Loveface</div>
+          <div class="show-desc">R&amp;B, Soul, and deep cuts. Music you forgot you loved. Vibes from Atlanta to Detroit.</div>
+        </div>
+        <div class="show-time">LIVE<br>On Air</div>
+      </div>
+      <div class="show-item">
+        <div class="show-num">02</div>
+        <div class="show-info">
+          <div class="show-title">Timeout Sports Talk</div>
+          <div class="show-host">STV Sports Desk</div>
+          <div class="show-desc">Live audience engagement sports talk. Polls, live chat, audience votes — all synced in real time.</div>
+        </div>
+        <div class="show-time">Live<br>Event Show</div>
+      </div>
+      <div class="show-item">
+        <div class="show-num">03</div>
+        <div class="show-info">
+          <div class="show-title">Slept On</div>
+          <div class="show-host">STV Features</div>
+          <div class="show-desc">Underground spotlight — indie and slept-on artists pushing culture forward from the margins.</div>
+        </div>
+        <div class="show-time">On Demand</div>
+      </div>
+      <div class="show-item">
+        <div class="show-num">04</div>
+        <div class="show-info">
+          <div class="show-title">Lost in the Sauce</div>
+          <div class="show-host">The So Luv Radio Show · Deep Cuts</div>
+          <div class="show-desc">The tracks the world walked right past. Full catalog deep dives — Rick James, Parliament, and more.</div>
+        </div>
+        <div class="show-time">On Demand</div>
+      </div>
+      <div class="show-item">
+        <div class="show-num">05</div>
+        <div class="show-info">
+          <div class="show-title">I'm Off My Meds</div>
+          <div class="show-host">Podcast · Spotify</div>
+          <div class="show-desc">The unfiltered STV podcast. Available on Spotify.</div>
+        </div>
+        <div class="show-time">
+          <a href="https://open.spotify.com/show/3lxIO679bCt15UJ3jUUYXV" target="_blank" rel="noopener" style="color:var(--gold);font-size:11px;">Listen →</a>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider" style="margin:40px 0;">
+
+    <!-- DJ ROSTER -->
+    <div class="section-label">On the Ones &amp; Twos</div>
+    <div class="section-title" style="margin-bottom:0;">DJ Roster</div>
+    <div class="dj-grid">
+      <div class="dj-card">
+        <div class="dj-initials">DM</div>
+        <div class="dj-name">DJ Mackinthedark</div>
+        <div class="dj-bio">Creator of LOVE&CO · Detroit, MI · Member of The Switchblades</div>
+        <a href="https://youtube.com/playlist?list=PLQ9p6GARi5fCwyLtEjrVWXyPXLzExEhTw" target="_blank" rel="noopener" class="card-link" style="margin-top:10px;">Watch LOVE&CO →</a>
+      </div>
+      <div class="dj-card" style="border-style:dashed;">
+        <div class="dj-initials" style="border-style:dashed;color:var(--muted);">?</div>
+        <div class="dj-name" style="color:var(--muted);">Your Name Here</div>
+        <div class="dj-bio">DJ · Show Host · Live Set</div>
+        <a href="https://formspree.io/f/mrbkljze" target="_blank" rel="noopener" class="card-link" style="margin-top:10px;">Join the Network →</a>
+      </div>
+    </div>
+  </div>
+</div><!-- /tab-shows -->
+
+<!-- ══════════════════════════════════════════════════════
+     TAB: PROMO
+═══════════════════════════════════════════════════════ -->
+<div id="tab-promo" class="tab-panel">
+
+  <div class="promo-hero">
+    <div class="section-label">STV Radiomeltdown · Broadcast Promos</div>
+    <h2>On Air Promos</h2>
+    <p>Network features, artist spotlights, and STV originals. Want yours here? Get in touch.</p>
+  </div>
+
+  <div class="section">
+    <div class="promo-grid">
+
+      <!-- PROMO 1: Blades / Switchblades -->
+      <div class="promo-card">
+        <div class="promo-card-video">
+          <video src="blades1.mp4" controls muted loop playsinline style="width:100%;height:100%;object-fit:cover;"></video>
+        </div>
+        <div class="promo-card-body">
+          <div class="promo-card-tag">STV PROMO</div>
+          <div class="promo-card-title">The Switchblades — Network Promo</div>
+          <p class="promo-card-desc">Detroit meets Lithonia. The Switchblades — on STV Radiomeltdown.</p>
+        </div>
+      </div>
+
+      <!-- PROMO 2: G4E Souljah -->
+      <div class="promo-card">
+        <div class="promo-card-video">
+          <iframe src="https://www.youtube.com/embed/UFHOsQ_msNE?si=xubW8iTC1TmocLy6" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="promo-card-body">
+          <div class="promo-card-tag">SLEPT ON</div>
+          <div class="promo-card-title">G4E Souljah — Indie Feature</div>
+          <p class="promo-card-desc">Underground spotlight segment — highlighting indie artists pushing culture forward.</p>
+        </div>
+      </div>
+
+      <!-- PROMO 3: LOVE&CO -->
+      <div class="promo-card">
+        <div class="promo-card-video">
+          <iframe src="https://www.youtube.com/embed/ubpj6amPnPI?si=pXol0sDdNxdAY-7L" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="promo-card-body">
+          <div class="promo-card-tag">ARTIST FEATURE</div>
+          <div class="promo-card-title">LOVE&CO — DJ Mackinthedark</div>
+          <p class="promo-card-desc">Genre-bending. Detroit-rooted. ADHD on Wax. Sound Without Borders.</p>
+        </div>
+      </div>
+
+      <!-- PROMO 4: The Static -->
+      <div class="promo-card">
+        <div class="promo-card-video">
+          <iframe src="https://www.youtube.com/embed/videoseries?list=PLQ9p6GARi5fDbBC-zfAVIv3-C64qefM_H" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="promo-card-body">
+          <div class="promo-card-tag">THE STATIC</div>
+          <div class="promo-card-title">The Static — Video Playlist</div>
+          <p class="promo-card-desc">Every episode of The Static — our culture and music newsletter brought to life on YouTube.</p>
+        </div>
+      </div>
+
+      <!-- PROMO 5: Mack Magic -->
+      <div class="promo-card">
+        <div class="promo-card-video" style="display:flex;align-items:center;justify-content:center;background:var(--bg2);">
+          <div style="text-align:center;padding:20px;">
+            <div style="font-family:var(--ff-display);font-size:28px;font-weight:700;color:var(--gold);">MACK MAGIC</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:4px;letter-spacing:.1em;">MOBILE BAR</div>
+          </div>
+        </div>
+        <div class="promo-card-body">
+          <div class="promo-card-tag">PARTNER PROMO</div>
+          <div class="promo-card-title">Mack Magic Mobile Bar</div>
+          <p class="promo-card-desc">Bartending &amp; DJ services for your next event. Book via radiomeltdown.store.</p>
+          <a href="https://radiomeltdown.store" target="_blank" rel="noopener" class="card-link">Book Now →</a>
+        </div>
+      </div>
+
+      <!-- PROMO 6: Wisemen Film -->
+      <div class="promo-card">
+        <div class="promo-card-video" style="display:flex;align-items:center;justify-content:center;background:#0a0a0a;">
+          <div style="text-align:center;padding:20px;">
+            <div style="font-family:var(--ff-display);font-size:24px;font-weight:700;letter-spacing:.05em;">THE WISEMEN</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:4px;letter-spacing:.2em;">2025 · FEATURE FILM</div>
+          </div>
+        </div>
+        <div class="promo-card-body">
+          <div class="promo-card-tag">FILM</div>
+          <div class="promo-card-title">The Wisemen — Feature Film (2025)</div>
+          <p class="promo-card-desc">An STV Broadcast Network / Saneca TV LLC original film production.</p>
+          <a href="https://fairefaretravels.github.io/wiseman-film/" target="_blank" rel="noopener" class="card-link">View Film Page →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WANT FREE RADIO PLAY CTA -->
+  <div class="promo-cta-strip">
+    <h3>Want Free Radio Play?</h3>
+    <p>STV Radiomeltdown supports independent artists. Submit your music and get on air — free.</p>
+    <a href="https://formspree.io/f/mrbkljze" target="_blank" rel="noopener" class="btn-dark">Submit Your Music →</a>
+  </div>
+
+</div><!-- /tab-promo -->
+
+<!-- ══════════════════════════════════════════════════════
+     TAB: ABOUT
+═══════════════════════════════════════════════════════ -->
+<div id="tab-about" class="tab-panel">
+
+  <div class="about-hero">
+    <div class="section-label">Who We Are</div>
+    <div class="section-title">STV Radiomeltdown</div>
+    <div class="about-stat-row">
+      <div class="about-stat">
+        <div class="about-stat-num">4</div>
+        <div class="about-stat-label">Radio Stations</div>
+      </div>
+      <div class="about-stat">
+        <div class="about-stat-num">24/7</div>
+        <div class="about-stat-label">Always Live</div>
+      </div>
+      <div class="about-stat">
+        <div class="about-stat-num">2012</div>
+        <div class="about-stat-label">Est. Lithonia, GA</div>
+      </div>
+      <div class="about-stat">
+        <div class="about-stat-num">1</div>
+        <div class="about-stat-label">City · Lithonia GA</div>
+      </div>
+    </div>
+
+    <div class="about-body">
+      <p>
+        <strong>STV Radiomeltdown</strong> is an independent broadcast network operating out of the
+        <strong>G4E Movement Studio in Lithonia, Georgia</strong>, under the Saneca TV LLC / STV Broadcast Network umbrella.
+        Established in 2012, STV has been a platform for indie artists, underground talent, mainstream acts, and AI music —
+        culture-driven and community-built from day one.
+      </p>
+      <p>
+        We are part of the <strong>SENSTACK media brand</strong> — a creative ecosystem spanning radio, bartending,
+        interior design, arts education, and broadcast production. STV is the broadcast arm, and
+        <strong>radiomeltdown.com</strong> is the home base.
+      </p>
+      <p>
+        Our mission is simple: give independent artists a platform, give the community a voice,
+        and keep the frequency live — always.
+      </p>
+    </div>
+
+    <hr class="divider" style="margin:32px 0;">
+
+    <div class="section-label">The Network</div>
+    <div class="section-title" style="font-size:20px;margin-bottom:16px;">SENSTACK Brands</div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-eyebrow">Broadcast</div>
+          <div class="card-title">STV On Air / Radio Meltdown</div>
+          <p class="card-desc">The flagship. Independent broadcast from Lithonia, GA.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="card-eyebrow">Events</div>
+          <div class="card-title">Mack Magic Mobile Bar</div>
+          <p class="card-desc">Mobile bartending &amp; DJ services.</p>
+          <a href="https://radiomeltdown.store" target="_blank" rel="noopener" class="card-link">radiomeltdown.store →</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="card-eyebrow">Design</div>
+          <div class="card-title">XOCO Designs</div>
+          <p class="card-desc">Furniture and interior design. Curated room packages and design fee model.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="card-eyebrow">Education</div>
+          <div class="card-title">Animation Prep</div>
+          <p class="card-desc">Arts education platform. School partnerships and grants in progress.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider" style="margin:32px 0;">
+
+    <div class="section-label">Contact</div>
+    <div class="section-title" style="font-size:20px;">Get In Touch</div>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:16px;">
+      <a href="tel:6784338772" class="btn-gold">📞 678-433-8772</a>
+      <a href="https://formspree.io/f/mrbkljze" target="_blank" rel="noopener" class="btn-outline">Contact Form</a>
+      <a href="https://www.tiktok.com/@sanecatv" target="_blank" rel="noopener" class="btn-outline">TikTok @SanecaTV</a>
+      <a href="https://kick.com/STVNETWORK" target="_blank" rel="noopener" class="btn-outline">Kick @STVNETWORK</a>
+    </div>
+  </div>
+
+</div><!-- /tab-about -->
+
+<!-- CONNECT STRIP -->
+<div class="connect-strip">
+  <div class="section-label">Book · Feature · Collaborate</div>
+  <h2>Connect</h2>
+  <p>Independent broadcast. Community-built. G4E Movement Studio — Lithonia, GA.</p>
+  <div class="connect-btns">
+    <a href="https://formspree.io/f/mrbkljze" target="_blank" rel="noopener" class="btn-gold">Contact Us</a>
+    <a href="tel:6784338772" class="btn-outline">📞 678-433-8772</a>
+    <a href="https://www.tiktok.com/@sanecatv" target="_blank" rel="noopener" class="btn-outline">TikTok @SanecaTV</a>
+    <a href="https://kick.com/STVNETWORK" target="_blank" rel="noopener" class="btn-outline">Kick @STVNETWORK</a>
+    <a href="https://sen-finds.myshopify.com/" target="_blank" rel="noopener" class="btn-outline">Saw It on TikTok</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div style="font-family:var(--ff-display);font-size:20px;font-weight:700;margin-bottom:8px;">STV <span style="color:var(--gold);">RADIO</span></div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6;">Independent broadcast. Community-built.<br>Always live. G4E Movement Studio —<br>Lithonia, GA.</div>
+    </div>
+    <div>
+      <div class="footer-heading">Network</div>
+      <ul class="footer-links">
+        <li><a href="#promo" class="tab-link" data-tab="promo">On Air Promos</a></li>
+        <li><a href="https://fairefaretravels.github.io/wiseman-film/" target="_blank" rel="noopener">Feature Film: The Wise Man</a></li>
+        <li><a href="https://fairefaretravels.github.io/stvradiomeltdown-players/" target="_blank" rel="noopener">24/7 Radio Players</a></li>
+        <li><a href="https://fairefaretravels.github.io/TheStatic-Publication/" target="_blank" rel="noopener">The Static</a></li>
+        <li><a href="https://fairefaretravels.github.io/Stv-Switchbladoku-/" target="_blank" rel="noopener">Switchbladoku</a></li>
+        <li><a href="https://kick.com/STVNETWORK" target="_blank" rel="noopener">Kick.com/STVNETWORK</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-heading">Contact</div>
+      <ul class="footer-links">
+        <li><a href="tel:6784338772">678-433-8772</a></li>
+        <li><span style="color:var(--muted);">Lithonia, GA</span></li>
+        <li><a href="https://formspree.io/f/mrbkljze" target="_blank" rel="noopener">Contact Form</a></li>
+        <li><a href="https://www.tiktok.com/@sanecatv" target="_blank" rel="noopener">@stvradiomeltdown TikTok</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-heading">Partners</div>
+      <ul class="footer-links">
+        <li><a href="https://radiomeltdown.store" target="_blank" rel="noopener">Mack Magic Mobile Bar</a></li>
+        <li><a href="https://fairefaretravels.github.io/agent-sanecamack/" target="_blank" rel="noopener">Faire Fare Travels</a></li>
+        <li><a href="https://sen-finds.myshopify.com/" target="_blank" rel="noopener">Sen Finds (TikTok Shop)</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 STV Radiomeltdown · G4E Movement Studio · Lithonia, GA</span>
+    <span>
+      <a href="https://fairefaretravels.github.io/agent-sanecamack/" target="_blank" rel="noopener">Faire Fare Travels</a>
+      &nbsp;·&nbsp;
+      <a href="https://formspree.io/f/mrbkljze" target="_blank" rel="noopener">Privacy</a>
+      &nbsp;·&nbsp;
+      <a href="https://radiomeltdown.com">radiomeltdown.com</a>
+    </span>
+  </div>
+</footer>
+
+<!-- PWA BANNER -->
+<div id="pwa-banner">
+  <span><strong>Add STV Radio</strong> to your home screen — background audio &amp; offline access.</span>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <button id="pwa-install-btn">Install</button>
+    <button id="pwa-dismiss-btn" onclick="document.getElementById('pwa-banner').classList.remove('show')">✕</button>
+  </div>
+</div>
+
+<script>
+  // ── AUDIO PLAYER ──────────────────────────────────────
+  const audio = document.getElementById('audio-player');
+  const playBtn = document.getElementById('play-btn');
+  let playing = false;
+
+  function tuneIn() {
+    const nav = document.querySelector('.nav');
+    nav.scrollIntoView({ behavior: 'smooth' });
+    if (!playing) togglePlay();
+  }
+
+  function togglePlay() {
+    if (playing) {
+      audio.pause();
+      playBtn.textContent = '▶';
+      playing = false;
+    } else {
+      audio.play().catch(() => {});
+      playBtn.textContent = '⏸';
+      playing = true;
+    }
+  }
+
+  // ── HASH-BASED TAB ROUTING ────────────────────────────
+  // All navigation stays on radiomeltdown.com — no GitHub URLs in address bar.
+  const TABS = ['radio', 'shows', 'promo', 'about'];
+
+  function activateTab(tabId) {
+    if (!TABS.includes(tabId)) tabId = 'radio';
+
+    // Show/hide panels
+    TABS.forEach(t => {
+      const panel = document.getElementById('tab-' + t);
+      if (panel) panel.classList.toggle('active', t === tabId);
+    });
+
+    // Update nav links
+    document.querySelectorAll('.tab-link').forEach(a => {
+      const isActive = a.dataset.tab === tabId;
+      a.classList.toggle('active', isActive);
+    });
+
+    // Update URL hash without reload
+    history.replaceState(null, '', '#' + tabId);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Intercept ALL tab links
+  document.querySelectorAll('.tab-link').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      activateTab(a.dataset.tab);
+    });
+  });
+
+  // On load, read hash
+  (function initTab() {
+    const hash = window.location.hash.replace('#', '');
+    activateTab(TABS.includes(hash) ? hash : 'radio');
+  })();
+
+  window.addEventListener('hashchange', () => {
+    const hash = window.location.hash.replace('#', '');
+    activateTab(TABS.includes(hash) ? hash : 'radio');
+  });
+
+  // ── STREAM LOADERS ────────────────────────────────────
+  function loadKick(btn) {
+    const card = btn.closest('.stream-card');
+    const iframe = document.createElement('iframe');
+    iframe.src = 'https://player.kick.com/STVNETWORK';
+    iframe.width = '100%'; iframe.height = '220';
+    iframe.allowFullscreen = true;
+    btn.replaceWith(iframe);
+  }
+  function loadYT(btn) {
+    const card = btn.closest('.stream-card');
+    const iframe = document.createElement('iframe');
+    iframe.src = 'https://www.youtube.com/embed/live_stream?channel=lFvfBqhziE0';
+    iframe.width = '100%'; iframe.height = '220';
+    iframe.allowFullscreen = true;
+    btn.replaceWith(iframe);
+  }
+  function loadVDO(btn) {
+    const iframe = document.createElement('iframe');
+    iframe.src = 'https://vdo.ninja/?scene&room=STVRADIOMELTDownAtl&sas&sl&showdirector';
+    iframe.width = '100%'; iframe.height = '220';
+    iframe.allowFullscreen = true;
+    btn.replaceWith(iframe);
+  }
+
+  // ── PWA INSTALL ───────────────────────────────────────
+  let deferredPrompt;
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    deferredPrompt = e;
+    document.getElementById('pwa-banner').classList.add('show');
+  });
+  document.getElementById('pwa-install-btn').addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    document.getElementById('pwa-banner').classList.remove('show');
+  });
+</script>
+</body>
+</html>
